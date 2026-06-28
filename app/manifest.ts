@@ -1,0 +1,16 @@
+import type { MetadataRoute } from "next";
+
+export const dynamic = "force-static";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "T-RAMOS DEV",
+    short_name: "T-RAMOS",
+    description: "Evolução em desenvolvimento web, tecnologia e Engenharia da Computação.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#09090B",
+    theme_color: "#A855F7",
+    icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }],
+  };
+}
