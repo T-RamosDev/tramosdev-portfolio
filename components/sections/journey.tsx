@@ -1,12 +1,12 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal, SectionHeading } from "../ui";
 import { ButtonLink } from "../ui/primitives";
 
 export function JourneySection() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <section className="section journey-section" id="journey">
       <div className="shell">
@@ -19,7 +19,7 @@ export function JourneySection() {
           <div className="timeline">
             {t.journey.entries.map((item, index) => (
               <Reveal className="timeline-item" key={`${item.period}-${item.role}`} delay={index * 0.06}>
-                <span className="timeline-dot" />
+                <span className="timeline-dot" aria-hidden="true" />
                 <p className="timeline-period">{item.period}</p>
                 <div><h3>{item.role}</h3><span>{item.company}</span><p>{item.detail}</p></div>
               </Reveal>

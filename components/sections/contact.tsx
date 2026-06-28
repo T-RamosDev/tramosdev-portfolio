@@ -2,18 +2,22 @@
 
 import { useState } from "react";
 import { ArrowRight, Check, Linkedin, Mail } from "lucide-react";
-import { officialLinks } from "@/data/i18n";
-import { useLocale } from "../locale-context";
+import { officialLinks } from "@/data/content";
+import { useContent } from "../content";
 import { Reveal } from "../ui";
 import { ButtonLink } from "../ui/primitives";
 
 export function ContactSection() {
-  const { t } = useLocale();
+  const t = useContent();
   const [copied, setCopied] = useState(false);
   const copy = async () => {
-    await navigator.clipboard.writeText(officialLinks.email);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
+    try {
+      await navigator.clipboard.writeText(officialLinks.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -27,7 +31,7 @@ export function ContactSection() {
           <div className="contact-actions">
             <ButtonLink href={`mailto:${officialLinks.email}`}>{t.contact.action} <ArrowRight size={18} /></ButtonLink>
             <a className="contact-social" href={officialLinks.linkedin} target="_blank" rel="noreferrer"><Linkedin size={16} />LinkedIn</a>
-            <button className="copy-email" onClick={copy}>{copied ? <Check size={16} /> : <Mail size={16} />}{copied ? t.contact.copied : officialLinks.email}</button>
+            <button className="copy-email" onClick={copy} aria-label={t.contact.copyEmail} aria-live="polite">{copied ? <Check size={16} /> : <Mail size={16} />}{copied ? t.contact.copied : officialLinks.email}</button>
           </div>
         </Reveal>
       </div>

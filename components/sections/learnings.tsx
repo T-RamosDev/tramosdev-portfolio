@@ -1,11 +1,11 @@
 "use client";
 
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal, SectionHeading } from "../ui";
 import { Badge, SurfaceCard } from "../ui/primitives";
 
 export function LearningsSection() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <section className="section studies-section" id="learnings">
       <div className="shell">

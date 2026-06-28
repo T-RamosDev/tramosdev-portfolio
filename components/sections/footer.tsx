@@ -1,16 +1,16 @@
 "use client";
 
 import { Github, Linkedin, Mail, MessageCircleMore } from "lucide-react";
-import { officialLinks } from "@/data/i18n";
-import { useLocale } from "../locale-context";
+import { officialLinks } from "@/data/content";
+import { useContent } from "../content";
 import { BrandLogo } from "../brand/logo";
 
 export function SiteFooter() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <footer>
       <div className="shell footer-inner">
-        <a className="footer-logo" href="#top"><BrandLogo /></a>
+        <a className="footer-logo" href="#top" aria-label="Voltar ao início"><BrandLogo /></a>
         <p>{t.footer.tagline}</p>
         <div className="footer-links">
           <a href={`mailto:${officialLinks.email}`}><Mail size={16} />E-mail</a>
@@ -26,7 +26,7 @@ export function SiteFooter() {
             <span className="footer-link-disabled" aria-label="Discord em desenvolvimento"><MessageCircleMore size={15} />Discord · em desenvolvimento</span>
           )}
         </div>
-        <div className="footer-base"><span>{t.footer.copyright}</span><span>{t.footer.location} · <i /></span></div>
+        <div className="footer-base"><span>{t.footer.copyright}</span><span>{t.footer.location} <i aria-hidden="true" /></span></div>
       </div>
     </footer>
   );

@@ -1,11 +1,11 @@
 "use client";
 
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal, SectionHeading } from "../ui";
 import { Badge } from "../ui/primitives";
 
 export function RoadmapSection() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <section className="section shell" id="roadmap">
       <SectionHeading eyebrow={t.roadmap.eyebrow} title={t.roadmap.title} copy={t.roadmap.copy} />

@@ -1,30 +1,19 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, MapPin } from "lucide-react";
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal } from "../ui";
 import { ButtonLink } from "../ui/primitives";
 import { BrandLogo } from "../brand/logo";
 
 export function HeroSection() {
-  const { t } = useLocale();
+  const t = useContent();
   const reduceMotion = useReducedMotion();
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 45, damping: 18 });
-  const springY = useSpring(mouseY, { stiffness: 45, damping: 18 });
-  const glowX = useTransform(springX, (value) => `${value}px`);
-  const glowY = useTransform(springY, (value) => `${value}px`);
 
   return (
-    <section className="hero" id="top" onPointerMove={(event) => {
-      if (!reduceMotion) {
-        mouseX.set(event.clientX);
-        mouseY.set(event.clientY);
-      }
-    }}>
-      <motion.div className="hero-glow" style={{ left: glowX, top: glowY }} />
+    <section className="hero" id="top">
+      <div className="hero-glow" aria-hidden="true" />
       <div className="hero-grid" aria-hidden="true" />
       <div className="hero-orbit orbit-one" aria-hidden="true" />
       <div className="hero-orbit orbit-two" aria-hidden="true" />
@@ -55,7 +44,7 @@ export function HeroSection() {
         <div className="hero-foot">
           <span>{t.hero.scroll}</span>
           <div className="hero-foot-line" />
-          <span>© 2026 / T—RAMOS DEV</span>
+          <span>© 2026 / T-RAMOS DEV</span>
         </div>
       </div>
     </section>

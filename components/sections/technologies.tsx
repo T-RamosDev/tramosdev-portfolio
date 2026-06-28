@@ -1,10 +1,10 @@
 "use client";
 
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal, SectionHeading } from "../ui";
 
 export function TechnologiesSection() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <section className="section shell" id="technologies">
       <SectionHeading eyebrow={t.expertise.eyebrow} title={t.expertise.title} copy={t.expertise.copy} />
@@ -17,9 +17,27 @@ export function TechnologiesSection() {
           </Reveal>
         ))}
       </div>
-      <Reveal className="stack-marquee">
-        <p>{t.expertise.tools}</p>
-        <div className="stack-track">{t.stack.map((item) => <span key={item}>{item}<i>✳</i></span>)}</div>
+      <Reveal className="technology-progress">
+        <div className="technology-progress-heading">
+          <p>{t.expertise.progressLabel}</p>
+          <span>Autoavaliação baseada em prática atual</span>
+        </div>
+        <div className="progress-list">
+          {t.expertise.progress.map((item) => (
+            <div className="progress-item" key={item.name}>
+              <div className="progress-meta">
+                <strong>{item.name}</strong>
+                <span>{item.stage}</span>
+              </div>
+              <div className="progress-track" aria-label={`${item.name}: ${item.stage}`}>
+                <i style={{ width: `${item.value}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="technology-tools" aria-label="Tecnologias em estudo">
+          {t.expertise.tools.map((item) => <span key={item}>{item}</span>)}
+        </div>
       </Reveal>
     </section>
   );

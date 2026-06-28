@@ -1,6 +1,3 @@
-"use client";
-
-import { LocaleProvider } from "./locale-context";
 import { SiteChrome } from "./chrome";
 import { HeroSection } from "./sections/hero";
 import { AboutSection } from "./sections/about";
@@ -15,7 +12,7 @@ import { SiteFooter } from "./sections/footer";
 
 export function Portfolio() {
   return (
-    <LocaleProvider>
+    <>
       <SiteChrome />
       <main>
         <HeroSection />
@@ -29,6 +26,6 @@ export function Portfolio() {
         <ContactSection />
       </main>
       <SiteFooter />
-    </LocaleProvider>
+    </>
   );
 }

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Command, Home, Linkedin, Mail, Search, UserRound, X } from "lucide-react";
-import { useLocale } from "./locale-context";
-import { officialLinks } from "@/data/i18n";
+import { Command, Home, Linkedin, Mail, Search, UserRound, X, type LucideIcon } from "lucide-react";
+import { useContent } from "./content";
+import { officialLinks } from "@/data/content";
 
 export function CommandPalette() {
-  const { t } = useLocale();
+  const t = useContent();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -22,17 +22,26 @@ export function CommandPalette() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const items = [
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  const items: Array<{ label: string; href: string; icon: LucideIcon; external?: boolean }> = [
     { label: t.chrome.home, href: "#top", icon: Home },
     ...t.nav.map((item) => ({ ...item, icon: UserRound })),
-    { label: t.chrome.email, href: `mailto:${officialLinks.email}`, icon: Mail },
-    { label: "LinkedIn", href: officialLinks.linkedin, icon: Linkedin },
+    { label: t.chrome.email, href: `mailto:${officialLinks.email}`, icon: Mail, external: false },
+    { label: "LinkedIn", href: officialLinks.linkedin, icon: Linkedin, external: true },
   ].filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <>
-      <button className="command-trigger" onClick={() => setOpen(true)} aria-label={t.chrome.openPalette}>
-        <Command size={15} /><span>{t.chrome.quickNav}</span><kbd>⌘ K</kbd>
+      <button className="command-trigger" onClick={() => setOpen(true)} aria-label={t.chrome.openPalette} aria-keyshortcuts="Control+K Meta+K">
+        <Command size={15} /><span>{t.chrome.quickNav}</span><kbd>Ctrl K</kbd>
       </button>
       {open && (
         <div className="palette-backdrop" onMouseDown={() => setOpen(false)} role="presentation">
@@ -44,8 +53,8 @@ export function CommandPalette() {
             </div>
             <div className="palette-list">
               <small>{t.chrome.navigate}</small>
-              {items.map(({ label, href, icon: Icon }) => (
-                <a key={label} href={href} onClick={() => setOpen(false)}>
+              {items.map(({ label, href, icon: Icon, external }) => (
+                <a key={label} href={href} onClick={() => setOpen(false)} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>
                   <Icon size={17} /><span>{label}</span><span className="palette-enter">↵</span>
                 </a>
               ))}

@@ -10,9 +10,9 @@ import {
   Triangle,
   type LucideIcon,
 } from "lucide-react";
-import { officialLinks } from "@/data/i18n";
+import { officialLinks } from "@/data/content";
 import { Badge } from "../ui/primitives";
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { Reveal, SectionHeading } from "../ui";
 
 const icons: Record<string, LucideIcon> = {
@@ -34,7 +34,7 @@ const links: Record<string, string | null> = {
 };
 
 export function EcosystemSection() {
-  const { t } = useLocale();
+  const t = useContent();
 
   return (
     <section className="section ecosystem-section" id="ecosystem">

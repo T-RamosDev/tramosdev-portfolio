@@ -1,40 +1,27 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { ExternalLink, Github, Search } from "lucide-react";
-import { useLocale } from "../locale-context";
+import { ExternalLink, Github } from "lucide-react";
+import { useContent } from "../content";
 import { ProjectVisual } from "../project-visual";
 import { Reveal, SectionHeading } from "../ui";
-import { Badge, ButtonLink, TextInput } from "../ui/primitives";
+import { Badge, ButtonLink } from "../ui/primitives";
 
 export function ProjectsSection() {
-  const { t } = useLocale();
-  const [filter, setFilter] = useState<string>(t.work.filters[0]);
-  const [query, setQuery] = useState("");
-  const visible = useMemo(
-    () => t.work.projects.filter((project) =>
-      (filter === t.work.filters[0] || project.category === filter) &&
-      project.title.toLowerCase().includes(query.toLowerCase())),
-    [filter, query, t],
-  );
-
-  useEffect(() => setFilter(t.work.filters[0]), [t]);
-  const hasMultipleProjects = t.work.projects.length > 1;
+  const t = useContent();
 
   return (
     <section className="section work-section" id="projects">
       <div className="shell">
         <SectionHeading eyebrow={t.work.eyebrow} title={t.work.title} copy={t.work.copy} />
-        {hasMultipleProjects && <Reveal className="project-controls">
-          <div className="filter-row" aria-label={t.work.search}>
-            {t.work.filters.map((item) => (
-              <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>
-            ))}
-          </div>
-          <TextInput className="project-search" icon={<Search size={16} />} label={t.work.search} value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.work.search} />
-        </Reveal>}
+        <Reveal className="project-status-legend">
+          {t.work.statusLegend.map((status) => (
+            <span className={status === "Em construção" ? "is-current" : ""} key={status}>
+              <i aria-hidden="true" />{status}
+            </span>
+          ))}
+        </Reveal>
         <div className="projects-grid">
-          {visible.map((project, index) => {
+          {t.work.projects.map((project, index) => {
             const sourceIndex = t.work.projects.findIndex((item) => item.title === project.title);
             return (
               <Reveal className="project-card" key={project.title} delay={index * 0.05}>
@@ -63,7 +50,6 @@ export function ProjectsSection() {
             );
           })}
         </div>
-        {visible.length === 0 && <p className="empty-state">{t.work.empty}</p>}
       </div>
     </section>
   );

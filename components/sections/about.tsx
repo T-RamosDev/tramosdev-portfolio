@@ -1,10 +1,10 @@
 "use client";
 
-import { useLocale } from "../locale-context";
+import { useContent } from "../content";
 import { ArrowLink, Reveal, SectionHeading } from "../ui";
 
 export function AboutSection() {
-  const { t } = useLocale();
+  const t = useContent();
   return (
     <section className="section shell" id="about">
       <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />

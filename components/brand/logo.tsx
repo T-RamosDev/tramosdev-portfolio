@@ -12,7 +12,7 @@ export function BrandLogo({ className = "", compact = false }: LogoProps) {
       </svg>
       {!compact && (
         <span className="brand-wordmark">
-          <strong>T—RAMOS</strong>
+          <strong>T-RAMOS</strong>
           <small>DEV</small>
         </span>
       )}
